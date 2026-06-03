@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Nunito:wght@400;500;600;700;800&display=swap');
+
+@import "./styles/theme.css";
+@import "tailwindcss";
+
+html,
+body,
+#root {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--canvas);
+  color: var(--ink);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: ui-rounded, "SF Pro Rounded", "Nunito", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+code,
+pre,
+kbd,
+samp,
+.font-mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
+}
+
+/* Custom slim technical scrollbars for internal scroll containers */
+[data-section-nav-ignore="true"]::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+[data-section-nav-ignore="true"]::-webkit-scrollbar-track {
+  background: var(--canvas-soft);
+  border-radius: 9999px;
+}
+
+[data-section-nav-ignore="true"]::-webkit-scrollbar-thumb {
+  background: var(--hairline-strong);
+  border-radius: 9999px;
+  transition: background 0.2s;
+}
+
+[data-section-nav-ignore="true"]::-webkit-scrollbar-thumb:hover {
+  background: var(--body);
+}
+
+/* Global typography sizing adjustments */
+html {
+  font-size: 16px;
+}
+
+@media (min-width: 1600px) {
+  html {
+    font-size: 17px;
+  }
+}
+
+body {
+  line-height: 1.6;
+}
+
+/* Operational Flow Connector Animations */
+@keyframes flowDash {
+  to {
+    stroke-dashoffset: -40;
+  }
+}
+
+.flow-connector-line {
+  stroke: var(--ink);
+  opacity: 0.55;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 8 5;
+  animation: flowDash 1.6s linear infinite;
+}
+
+.flow-connector-line-muted {
+  stroke: var(--body);
+  opacity: 0.45;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 8 5;
+  animation: flowDash 2s linear infinite;
+}
+
+.flow-connector-line-active {
+  stroke: var(--primary);
+  stroke-width: 2.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 8 5;
+  animation: flowDash 1.2s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flow-connector-line,
+  .flow-connector-line-muted,
+  .flow-connector-line-active {
+    animation: none;
+  }
+}

@@ -1,0 +1,106 @@
+/* Light theme is the default */
+:root,
+[data-theme="light"] {
+  --canvas: #ffffff;
+  --canvas-soft: #fafafa;
+  --surface: #ffffff;
+  --surface-soft: #fafafa;
+  --surface-dark: #171717;
+
+  --ink: #000000;
+  --ink-deep: #090909;
+  --charcoal: #525252;
+  --body: #737373;
+  --mute: #a3a3a3;
+
+  --on-primary: #ffffff;
+  --on-dark: #ffffff;
+  --on-dark-mute: rgba(255, 255, 255, 0.7);
+
+  --hairline: #e5e5e5;
+  --hairline-strong: #d4d4d4;
+
+  --primary: #000000;
+  --primary-active: #090909;
+  --primary-text: #ffffff;
+
+  --focus-ring: rgba(59, 130, 246, 0.5);
+
+  --terminal-red: #ff5f56;
+  --terminal-yellow: #ffbd2e;
+  --terminal-green: #27c93f;
+
+  --success: #16a34a;
+  --warning: #d97706;
+  --danger: #dc2626;
+  --info: #525252;
+
+  --radius-card: 12px;
+  --radius-pill: 9999px;
+
+  --shadow-card: none;
+
+  /* Compatibility aliases for existing project code */
+  --bg: var(--canvas);
+  --bg-soft: var(--canvas-soft);
+  --text: var(--ink);
+  --text-muted: var(--body);
+  --text-soft: var(--mute);
+  --border: var(--hairline);
+  --border-strong: var(--hairline-strong);
+  --accent: var(--ink);
+  --card-shadow: var(--shadow-card);
+}
+
+/* Dark theme is a restrained inversion */
+[data-theme="dark"] {
+  --canvas: #090909;
+  --canvas-soft: #111111;
+  --surface: #0f0f0f;
+  --surface-soft: #171717;
+  --surface-dark: #ffffff;
+
+  --ink: #ffffff;
+  --ink-deep: #f5f5f5;
+  --charcoal: #d4d4d4;
+  --body: #a3a3a3;
+  --mute: #737373;
+
+  --on-primary: #000000;
+  --on-dark: #000000;
+  --on-dark-mute: rgba(0, 0, 0, 0.7);
+
+  --hairline: #262626;
+  --hairline-strong: #404040;
+
+  --primary: #ffffff;
+  --primary-active: #e5e5e5;
+  --primary-text: #000000;
+
+  --focus-ring: rgba(59, 130, 246, 0.5);
+
+  --terminal-red: #ff5f56;
+  --terminal-yellow: #ffbd2e;
+  --terminal-green: #27c93f;
+
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --info: #d4d4d4;
+
+  --radius-card: 12px;
+  --radius-pill: 9999px;
+
+  --shadow-card: none;
+
+  /* Compatibility aliases for existing project code */
+  --bg: var(--canvas);
+  --bg-soft: var(--canvas-soft);
+  --text: var(--ink);
+  --text-muted: var(--body);
+  --text-soft: var(--mute);
+  --border: var(--hairline);
+  --border-strong: var(--hairline-strong);
+  --accent: var(--ink);
+  --card-shadow: var(--shadow-card);
+}
