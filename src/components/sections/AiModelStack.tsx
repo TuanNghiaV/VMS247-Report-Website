@@ -40,7 +40,7 @@ const principles = [
   { title: "KPI riêng theo module", desc: "Đo precision, recall, false alarm & latency riêng biệt." }
 ];
 
-// 1. ModuleTabs (Vertical Rail on the Left)
+// 1. ModuleTabs (Horizontal scroll on mobile, Vertical Rail on Desktop)
 interface ModuleTabsProps {
   activeTabId: number;
   setActiveTabId: (id: number) => void;
@@ -48,10 +48,7 @@ interface ModuleTabsProps {
 
 const ModuleTabs: React.FC<ModuleTabsProps> = ({ activeTabId, setActiveTabId }) => {
   return (
-    <div className="flex flex-col gap-3 w-full">
-      <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--mute)] px-1 mb-1">
-        Phân hệ nghiệp vụ
-      </span>
+    <div className="flex flex-row lg:flex-col gap-2 w-full overflow-x-auto pb-2 lg:pb-0 lg:overflow-visible shrink-0" data-section-nav-ignore="true">
       {tabLabels.map((item) => {
         const Icon = getIcon(item.id);
         const isSelected = activeTabId === item.id;
@@ -60,29 +57,29 @@ const ModuleTabs: React.FC<ModuleTabsProps> = ({ activeTabId, setActiveTabId }) 
             key={item.id}
             onClick={() => setActiveTabId(item.id)}
             className={cn(
-              "flex items-center gap-3 p-3.5 rounded-xl border text-left transition-all duration-200 cursor-pointer focus:outline-none focus-visible:ring-1 focus-visible:ring-[var(--focus-ring)] w-full",
+              "flex items-center gap-2.5 p-2 rounded-xl border text-left transition-all duration-200 cursor-pointer focus:outline-none focus-visible:ring-1 focus-visible:ring-[var(--focus-ring)] shrink-0 w-auto lg:w-full",
               isSelected
                 ? "bg-[var(--primary)] border-[var(--primary)] text-[var(--primary-text)] shadow-sm"
                 : "bg-[var(--canvas-soft)] border-[var(--hairline)] text-[var(--body)] hover:border-[var(--hairline-strong)] hover:bg-[var(--surface-soft)]"
             )}
           >
             <div className={cn(
-              "p-2 rounded-lg border shrink-0",
+              "p-1.5 rounded-lg border shrink-0",
               isSelected 
                 ? "bg-[var(--primary-text)] border-[var(--primary-text)] text-[var(--primary)]" 
                 : "bg-[var(--canvas)] border-[var(--hairline)] text-[var(--mute)]"
             )}>
-              <Icon className="h-4 w-4" />
+              <Icon className="h-3.5 w-3.5" />
             </div>
             <div className="min-w-0 flex-1">
               <h4 className={cn(
-                "text-sm font-bold leading-tight",
+                "text-xs sm:text-sm font-bold leading-tight",
                 isSelected ? "text-[var(--primary-text)]" : "text-[var(--ink)]"
               )}>
                 {item.title}
               </h4>
               <p className={cn(
-                "text-xs mt-1 leading-none font-mono",
+                "text-[10px] mt-0.5 leading-none font-mono",
                 isSelected ? "text-[var(--primary-text)]/80" : "text-[var(--mute)]"
               )}>
                 {item.sub}
@@ -121,7 +118,7 @@ const ModuleBrief: React.FC<ModuleBriefProps> = ({ module }) => {
         </p>
       </div>
 
-      <div className="grid grid-cols-2 gap-4 text-xs bg-[var(--canvas-soft)] p-2.5 rounded-lg border border-[var(--hairline)]">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs bg-[var(--canvas-soft)] p-2.5 rounded-lg border border-[var(--hairline)]">
         <div>
           <strong className="text-[var(--ink)] block mb-0.5 text-xs">Mục tiêu phát hiện:</strong>
           <span className="text-[var(--body)] text-[11.5px] leading-normal">{module.detectionGoal}</span>
@@ -149,12 +146,12 @@ const CorePipelineHero: React.FC<CorePipelineHeroProps> = ({ module }) => {
           Core Pilot Stack
         </span>
         <span className="text-[9px] font-mono font-bold bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 px-2 rounded-full uppercase">
-          Khuyến nghị triển khai Gia Lâm
+          Khuyến nghị
         </span>
       </div>
 
       {/* Stack / Pipeline Nodes */}
-      <div className="grid grid-cols-4 gap-2 py-0.5 relative">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 py-0.5 relative">
         {module.coreStack.map((node, idx) => {
           const isFirst = idx === 0;
           const isLast = idx === module.coreStack.length - 1;
@@ -199,7 +196,7 @@ interface DecisionRationaleProps {
 
 const DecisionRationale: React.FC<DecisionRationaleProps> = ({ module }) => {
   return (
-    <div className="grid grid-cols-2 gap-4 bg-[var(--canvas-soft)] p-3 rounded-xl border border-[var(--hairline)] text-xs">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-[var(--canvas-soft)] p-3 rounded-xl border border-[var(--hairline)] text-xs">
       <div className="space-y-1">
         <strong className="text-[var(--ink)] flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider">
           <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
@@ -282,7 +279,7 @@ const BenchmarkSidebar: React.FC<BenchmarkSidebarProps> = ({ module }) => {
         <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--mute)] border-b border-[var(--hairline)] pb-2">
           Nguyên tắc chọn model & Benchmark
         </h3>
-        <div className="grid grid-cols-2 gap-2 text-xs">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
           {principles.map((p, idx) => (
             <div key={idx} className="rounded-lg border border-[var(--hairline)] bg-[var(--canvas-soft)] p-2.5 leading-snug">
               <strong className="text-[var(--ink)] block mb-0.5 text-xs">{p.title}</strong>
@@ -360,7 +357,7 @@ export const AiModelStack: React.FC<SectionProps> = ({ isActive = false }) => {
     >
       {/* Title */}
       <div className="mb-3">
-        <TechChapterLabel index={4} />
+        <TechChapterLabel label="AI MODEL STACK" />
         <h2 className="text-2xl font-bold tracking-tight text-[var(--ink)] md:text-3xl">
           Lớp mô hình AI theo nghiệp vụ
         </h2>

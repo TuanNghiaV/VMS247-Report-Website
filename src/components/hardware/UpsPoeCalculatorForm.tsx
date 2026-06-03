@@ -81,7 +81,7 @@ export const UpsPoeCalculatorForm: React.FC<UpsPoeCalculatorFormProps> = () => {
               value={cameraCount}
               min={1}
               onChange={(e) => setCameraCount(Math.max(1, parseInt(e.target.value) || 1))}
-              className="h-8 w-full rounded-[var(--radius-pill)] border border-[var(--hairline-strong)] bg-[var(--canvas-soft)] text-center text-[var(--ink)] font-mono focus:outline-none"
+              className="h-10 sm:h-8 w-full rounded-[var(--radius-pill)] border border-[var(--hairline-strong)] bg-[var(--canvas-soft)] text-center text-[var(--ink)] font-mono focus:outline-none"
             />
           </div>
           <div>
@@ -91,7 +91,7 @@ export const UpsPoeCalculatorForm: React.FC<UpsPoeCalculatorFormProps> = () => {
               value={wattPerCamera}
               min={1}
               onChange={(e) => setWattPerCamera(Math.max(1, parseInt(e.target.value) || 1))}
-              className="h-8 w-full rounded-[var(--radius-pill)] border border-[var(--hairline-strong)] bg-[var(--canvas-soft)] text-center text-[var(--ink)] font-mono focus:outline-none"
+              className="h-10 sm:h-8 w-full rounded-[var(--radius-pill)] border border-[var(--hairline-strong)] bg-[var(--canvas-soft)] text-center text-[var(--ink)] font-mono focus:outline-none"
             />
           </div>
           <div>
@@ -101,7 +101,7 @@ export const UpsPoeCalculatorForm: React.FC<UpsPoeCalculatorFormProps> = () => {
               value={poeBudget}
               min={10}
               onChange={(e) => setPoeBudget(Math.max(10, parseInt(e.target.value) || 10))}
-              className="h-8 w-full rounded-[var(--radius-pill)] border border-[var(--hairline-strong)] bg-[var(--canvas-soft)] text-center text-[var(--ink)] font-mono focus:outline-none"
+              className="h-10 sm:h-8 w-full rounded-[var(--radius-pill)] border border-[var(--hairline-strong)] bg-[var(--canvas-soft)] text-center text-[var(--ink)] font-mono focus:outline-none"
             />
           </div>
         </div>
@@ -114,7 +114,7 @@ export const UpsPoeCalculatorForm: React.FC<UpsPoeCalculatorFormProps> = () => {
               value={serverW}
               min={0}
               onChange={(e) => setServerW(Math.max(0, parseInt(e.target.value) || 0))}
-              className="h-8 w-full rounded-[var(--radius-pill)] border border-[var(--hairline-strong)] bg-[var(--canvas-soft)] text-center text-[var(--ink)] font-mono focus:outline-none"
+              className="h-10 sm:h-8 w-full rounded-[var(--radius-pill)] border border-[var(--hairline-strong)] bg-[var(--canvas-soft)] text-center text-[var(--ink)] font-mono focus:outline-none"
             />
           </div>
           <div>
@@ -124,7 +124,7 @@ export const UpsPoeCalculatorForm: React.FC<UpsPoeCalculatorFormProps> = () => {
               value={nasW}
               min={0}
               onChange={(e) => setNasW(Math.max(0, parseInt(e.target.value) || 0))}
-              className="h-8 w-full rounded-[var(--radius-pill)] border border-[var(--hairline-strong)] bg-[var(--canvas-soft)] text-center text-[var(--ink)] font-mono focus:outline-none"
+              className="h-10 sm:h-8 w-full rounded-[var(--radius-pill)] border border-[var(--hairline-strong)] bg-[var(--canvas-soft)] text-center text-[var(--ink)] font-mono focus:outline-none"
             />
           </div>
           <div>
@@ -134,7 +134,7 @@ export const UpsPoeCalculatorForm: React.FC<UpsPoeCalculatorFormProps> = () => {
               value={switchW}
               min={0}
               onChange={(e) => setSwitchW(Math.max(0, parseInt(e.target.value) || 0))}
-              className="h-8 w-full rounded-[var(--radius-pill)] border border-[var(--hairline-strong)] bg-[var(--canvas-soft)] text-center text-[var(--ink)] font-mono focus:outline-none"
+              className="h-10 sm:h-8 w-full rounded-[var(--radius-pill)] border border-[var(--hairline-strong)] bg-[var(--canvas-soft)] text-center text-[var(--ink)] font-mono focus:outline-none"
             />
           </div>
         </div>
@@ -148,7 +148,7 @@ export const UpsPoeCalculatorForm: React.FC<UpsPoeCalculatorFormProps> = () => {
               min={1}
               step={0.5}
               onChange={(e) => setUpsKva(Math.max(1, parseFloat(e.target.value) || 1))}
-              className="h-8 w-full rounded-[var(--radius-pill)] border border-[var(--hairline-strong)] bg-[var(--canvas-soft)] text-center text-[var(--ink)] font-mono focus:outline-none"
+              className="h-10 sm:h-8 w-full rounded-[var(--radius-pill)] border border-[var(--hairline-strong)] bg-[var(--canvas-soft)] text-center text-[var(--ink)] font-mono focus:outline-none"
             />
           </div>
           <div>
@@ -159,7 +159,7 @@ export const UpsPoeCalculatorForm: React.FC<UpsPoeCalculatorFormProps> = () => {
               min={0.1}
               step={0.1}
               onChange={(e) => setPowerFactor(Math.max(0.1, parseFloat(e.target.value) || 0.9))}
-              className="h-8 w-full rounded-[var(--radius-pill)] border border-[var(--hairline-strong)] bg-[var(--canvas-soft)] text-center text-[var(--ink)] font-mono focus:outline-none"
+              className="h-10 sm:h-8 w-full rounded-[var(--radius-pill)] border border-[var(--hairline-strong)] bg-[var(--canvas-soft)] text-center text-[var(--ink)] font-mono focus:outline-none"
             />
           </div>
           <div>
@@ -169,7 +169,7 @@ export const UpsPoeCalculatorForm: React.FC<UpsPoeCalculatorFormProps> = () => {
               value={batteryWh}
               min={10}
               onChange={(e) => setBatteryWh(Math.max(10, parseInt(e.target.value) || 10))}
-              className="h-8 w-full rounded-[var(--radius-pill)] border border-[var(--hairline-strong)] bg-[var(--canvas-soft)] text-center text-[var(--ink)] font-mono focus:outline-none"
+              className="h-10 sm:h-8 w-full rounded-[var(--radius-pill)] border border-[var(--hairline-strong)] bg-[var(--canvas-soft)] text-center text-[var(--ink)] font-mono focus:outline-none"
             />
           </div>
         </div>

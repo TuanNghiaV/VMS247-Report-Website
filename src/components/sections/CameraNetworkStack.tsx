@@ -50,7 +50,7 @@ export const CameraNetworkStack: React.FC<SectionProps> = ({
   return (
     <SectionShell id="camera-network-stack" isActive={isActive}>
       <div className="mb-3">
-        <TechChapterLabel index={2} />
+        <TechChapterLabel label="CAMERA & NETWORK STACK" />
         <h2 className="text-2xl font-semibold tracking-tight text-[var(--ink)] md:text-3xl">
           Hạ tầng Camera & Mạng nội bộ
         </h2>
@@ -61,8 +61,8 @@ export const CameraNetworkStack: React.FC<SectionProps> = ({
 
       <ClassificationStrip groups={classification} className="mb-3 grid grid-cols-1 gap-2 md:grid-cols-3" />
 
-      <div className="grid flex-1 grid-cols-1 gap-6 overflow-hidden lg:grid-cols-2" data-section-nav-ignore="true">
-        <div className="max-h-[calc(100svh-330px)] overflow-y-auto pr-1">
+      <div className="grid flex-1 grid-cols-1 gap-6 overflow-visible sm:overflow-hidden lg:grid-cols-2" data-section-nav-ignore="true">
+        <div className="max-h-none sm:max-h-[calc(100svh-330px)] sm:overflow-y-auto pr-1">
           <GlassCard className="border border-[var(--hairline-strong)] p-5" hoverGlow={false}>
             <div className="mb-3 flex items-center gap-2">
               <ShieldCheck className="h-5 w-5 text-[var(--ink)]" />
@@ -88,7 +88,7 @@ export const CameraNetworkStack: React.FC<SectionProps> = ({
           </GlassCard>
         </div>
 
-        <div className="max-h-[calc(100svh-330px)] overflow-y-auto pr-1">
+        <div className="max-h-none sm:max-h-[calc(100svh-330px)] sm:overflow-y-auto pr-1">
           <GlassCard className="border border-[var(--hairline-strong)] p-5" hoverGlow={false}>
             <div className="mb-3 flex items-center gap-2">
               <Network className="h-5 w-5 text-[var(--ink)]" />

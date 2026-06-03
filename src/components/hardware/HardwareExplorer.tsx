@@ -11,6 +11,7 @@ import { CalculatorModal } from "../ui/CalculatorModal";
 import { StorageCalculatorForm } from "./StorageCalculatorForm";
 import { UpsPoeCalculatorForm } from "./UpsPoeCalculatorForm";
 import { Calculator } from "lucide-react";
+import { cn } from "../../utils/cn";
 
 import { GpuComparisonForm } from "./GpuComparisonForm";
 
@@ -42,11 +43,46 @@ export const HardwareExplorer: React.FC = () => {
         <div className="grid grid-cols-1 gap-3 xl:grid-cols-[minmax(0,1.5fr)_minmax(320px,0.85fr)]">
           {/* Visual diagram & Quick Actions */}
           <div className="min-w-0 rounded-[var(--radius-card)] border border-[var(--hairline)] bg-[var(--surface)] p-4 flex flex-col justify-between gap-4">
-            <RenderDiagram
-              group={activeGroup}
-              selectedPartId={selectedPart.id}
-              onSelectPart={setSelectedPartId}
-            />
+            <div className="w-full overflow-x-auto py-2 flex justify-center">
+              <div className="shrink-0 scale-90 sm:scale-100 origin-center">
+                <RenderDiagram
+                  group={activeGroup}
+                  selectedPartId={selectedPart.id}
+                  onSelectPart={setSelectedPartId}
+                />
+              </div>
+            </div>
+
+            {/* Mobile Fallback List of Parts */}
+            <div className="block xl:hidden border-t border-[var(--hairline)] pt-3" data-section-nav-ignore="true">
+              <span className="block text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--mute)] mb-2">
+                Chọn linh kiện để xem chi tiết
+              </span>
+              <div className="flex flex-row flex-nowrap overflow-x-auto gap-2 pb-2 -mx-2 px-2 scrollbar-none">
+                {activeGroup.parts.map((part) => {
+                  const selected = part.id === selectedPart.id;
+                  return (
+                    <button
+                      key={part.id}
+                      type="button"
+                      onClick={() => setSelectedPartId(part.id)}
+                      className={cn(
+                        "shrink-0 inline-flex items-center gap-1.5 rounded-[var(--radius-pill)] border px-3 py-1.5 text-xs font-semibold transition-all duration-150",
+                        selected
+                          ? "border-[var(--primary)] bg-[var(--primary)] text-[var(--primary-text)] shadow-sm"
+                          : "border-[var(--hairline)] bg-[var(--canvas-soft)] text-[var(--body)] hover:bg-[var(--surface-soft)]"
+                      )}
+                    >
+                      <span className={cn(
+                        "h-1.5 w-1.5 rounded-full",
+                        selected ? "bg-emerald-400" : "bg-[var(--mute)]"
+                      )} />
+                      {part.shortLabel || part.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
 
             {/* Quick Actions (Calculator Modals trigger) */}
             {activeGroupId === "nas-storage" && (

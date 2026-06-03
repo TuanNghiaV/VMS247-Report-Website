@@ -92,7 +92,7 @@ export const BackendDataStack: React.FC<SectionProps> = ({
   return (
     <SectionShell id="backend-data-stack" isActive={isActive} contentClassName="max-w-7xl">
       <div className="mb-3">
-        <TechChapterLabel index={5} />
+        <TechChapterLabel label="BACKEND, EVENT & DATA" />
         <h2 className="text-2xl font-semibold tracking-tight text-[var(--ink)] md:text-3xl">
           Backend, Rule Engine &amp; Lưu trữ dữ liệu
         </h2>
@@ -144,7 +144,7 @@ function BackendPipelineHero() {
         </span>
       </div>
 
-      <div className="grid grid-cols-6 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
         {pipelineNodes.map((node, index) => {
           const Icon = node.icon;
 
@@ -201,7 +201,7 @@ function BackendPipelineHero() {
 
 function SupportGrid() {
   return (
-    <section className="grid grid-cols-3 gap-4">
+    <section className="grid grid-cols-1 lg:grid-cols-3 gap-4">
       <RuleEngineConsole />
       <DataResponsibility />
       <PilotScaleDecision />
@@ -220,7 +220,7 @@ function RuleEngineConsole() {
           Chuyển AI metadata thành event hợp lệ bằng rule theo vùng/camera.
         </p>
       </div>
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid grid-cols-1 xs:grid-cols-2 gap-2">
         {ruleChips.map(([title, desc]) => (
           <div
             key={title}

@@ -159,7 +159,7 @@ export const SecurityMonitoring: React.FC<SectionProps> = ({
   return (
     <SectionShell id="security-monitoring" isActive={isActive} contentClassName="max-w-7xl">
       <div className="mb-3">
-        <TechChapterLabel index={6} />
+        <TechChapterLabel label="SECURITY & MONITORING" />
         <h2 className="text-2xl font-semibold tracking-tight text-[var(--ink)] md:text-3xl">
           Bảo mật, giám sát &amp; kiểm soát vận hành
         </h2>
@@ -204,65 +204,78 @@ function ControlRail({
   onSelect: (key: ControlKey) => void;
 }) {
   return (
-    <aside className="flex flex-col gap-2.5">
-      <p className="px-1 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--mute)]">
+    <aside className="flex flex-col gap-2">
+      <p className="px-1 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--mute)] lg:block hidden">
         Control center
       </p>
-      {controls.map((control) => {
-        const Icon = control.icon;
-        const active = activeControl === control.key;
+      <div
+        className="flex flex-row gap-2 overflow-x-auto pb-2 -mx-4 px-4 lg:mx-0 lg:px-0 lg:pb-0 lg:flex-col lg:overflow-visible scrollbar-none"
+        data-section-nav-ignore="true"
+      >
+        {controls.map((control) => {
+          const Icon = control.icon;
+          const active = activeControl === control.key;
 
-        return (
-          <button
-            key={control.key}
-            type="button"
-            onClick={() => onSelect(control.key)}
-            className={cn(
-              "relative overflow-hidden rounded-[var(--radius-card)] border p-3 text-left transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]",
-              active
-                ? "border-[var(--primary)] bg-[var(--primary)] text-[var(--primary-text)] shadow-sm ring-1 ring-emerald-400/20"
-                : "border-[var(--hairline)] bg-[var(--surface)] text-[var(--body)] hover:border-[var(--hairline-strong)] hover:bg-[var(--surface-soft)]"
-            )}
-          >
-            <span
+          return (
+            <button
+              key={control.key}
+              type="button"
+              onClick={() => onSelect(control.key)}
               className={cn(
-                "absolute bottom-0 left-0 top-0 w-1",
-                active ? "bg-emerald-400" : "bg-transparent"
+                "relative overflow-hidden shrink-0 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]",
+                "flex items-center gap-2 rounded-[var(--radius-pill)] border px-3 py-1.5 text-xs font-semibold",
+                "lg:block lg:rounded-[var(--radius-card)] lg:p-3 lg:text-left",
+                active
+                  ? "border-[var(--primary)] bg-[var(--surface-soft)] text-[var(--ink)] ring-1 ring-[var(--primary)]/20 shadow-sm"
+                  : "border-[var(--hairline)] bg-[var(--surface)] text-[var(--body)] hover:border-[var(--hairline-strong)] hover:bg-[var(--surface-soft)]"
               )}
-            />
-            {active ? (
-              <span className="absolute right-3 top-3 h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_0_3px_rgba(52,211,153,0.18)]" />
-            ) : null}
-            <div className="flex gap-3 pl-1">
+            >
               <span
                 className={cn(
-                  "grid h-10 w-10 shrink-0 place-items-center rounded-[var(--radius-pill)] border",
-                  active
-                    ? "border-white/25 bg-white text-black shadow-sm"
-                    : "border-[var(--hairline)] bg-[var(--canvas-soft)] text-[var(--ink)]"
+                  "absolute bottom-0 left-0 top-0 w-1 lg:block hidden",
+                  active ? "bg-emerald-400" : "bg-transparent"
                 )}
-              >
-                <Icon className="h-4.5 w-4.5" />
-              </span>
-              <span>
-                <span className={cn("block text-sm font-semibold", active ? "text-white" : "text-[var(--ink)]")}>
-                  {control.title}
+              />
+              {active ? (
+                <span className="absolute right-3 top-3 h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_0_3px_rgba(52,211,153,0.18)] lg:block hidden" />
+              ) : null}
+
+              <div className="flex items-center gap-1.5 lg:hidden">
+                <Icon className={cn("h-3.5 w-3.5", active ? "text-[var(--primary)]" : "text-[var(--body)]")} />
+                <span>{control.title}</span>
+              </div>
+
+              <div className="hidden lg:flex gap-3 pl-1">
+                <span
+                  className={cn(
+                    "grid h-10 w-10 shrink-0 place-items-center rounded-[var(--radius-pill)] border transition-colors",
+                    active
+                      ? "border-[var(--primary)]/25 bg-[var(--primary)]/10 text-[var(--primary)] shadow-sm"
+                      : "border-[var(--hairline)] bg-[var(--canvas-soft)] text-[var(--mute)]"
+                  )}
+                >
+                  <Icon className="h-4.5 w-4.5" />
                 </span>
-                <span className={cn("mt-1 block text-xs leading-snug", active ? "text-white/75" : "text-[var(--body)]")}>
-                  {control.subtitle}
+                <span>
+                  <span className="block text-sm font-semibold text-[var(--ink)]">
+                    {control.title}
+                  </span>
+                  <span className={cn("mt-1 block text-xs leading-snug transition-colors", active ? "text-[var(--body)]" : "text-[var(--mute)]")}>
+                    {control.subtitle}
+                  </span>
                 </span>
-              </span>
-            </div>
-          </button>
-        );
-      })}
+              </div>
+            </button>
+          );
+        })}
+      </div>
     </aside>
   );
 }
 
 function ActiveOperationsPanel({ activeControl }: { activeControl: ControlKey }) {
   return (
-    <main className="rounded-[var(--radius-card)] border border-[var(--hairline-strong)] bg-[var(--surface)] p-5">
+    <main className="rounded-[var(--radius-card)] border border-[var(--hairline-strong)] bg-[var(--surface)] p-4 sm:p-5">
       {activeControl === "metrics" && <MetricsPanel />}
       {activeControl === "rbac" && <RbacPanel />}
       {activeControl === "backup" && <BackupPanel />}
@@ -279,7 +292,7 @@ function MetricsPanel() {
         title="Observability map"
         description="Những tín hiệu vận hành cần đo để phát hiện sớm lỗi camera, GPU, NAS, event và backup."
       />
-      <div className="mt-4 grid grid-cols-3 gap-3">
+      <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
         {metricGroups.map(([title, metrics]) => (
           <div
             key={title}
@@ -313,7 +326,38 @@ function RbacPanel() {
         description="Pilot dùng phân quyền đơn giản nhưng mọi thao tác nhạy cảm phải truy vết được."
       />
       <RbacLegend />
-      <div className="mt-4 overflow-hidden rounded-[var(--radius-card)] border border-[var(--hairline)]">
+      
+      <div className="mt-4 space-y-3 lg:hidden">
+        {roleRows.map((row) => (
+          <div key={row.role} className="rounded-[var(--radius-card)] border border-[var(--hairline)] bg-[var(--canvas-soft)] p-3">
+            <div className="border-b border-[var(--hairline)] pb-2 mb-2">
+              <h4 className="font-semibold text-sm text-[var(--ink)]">{row.role}</h4>
+              <p className="mt-0.5 text-xs text-[var(--body)]">{row.note}</p>
+            </div>
+            <div className="space-y-1.5">
+              {row.permissions.map((perm, idx) => {
+                const colName = permissionColumns[idx];
+                return (
+                  <div key={colName} className="flex justify-between items-center text-xs">
+                    <span className="text-[var(--mute)]">{colName}</span>
+                    <span className="font-medium text-[var(--ink)]">
+                      {perm === "yes" ? (
+                        <span className="text-emerald-600 bg-emerald-500/10 px-2 py-0.5 rounded-[var(--radius-pill)] border border-emerald-500/20">Full access</span>
+                      ) : perm === "limited" ? (
+                        <span className="text-amber-600 bg-amber-500/10 px-2 py-0.5 rounded-[var(--radius-pill)] border border-amber-500/20">Limited</span>
+                      ) : (
+                        <span className="text-[var(--mute)]">- No access</span>
+                      )}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-4 hidden lg:block overflow-hidden rounded-[var(--radius-card)] border border-[var(--hairline)]">
         <div className="grid grid-cols-[150px_repeat(7,minmax(0,1fr))] bg-[var(--canvas-soft)] text-[11px] font-semibold text-[var(--mute)]">
           <div className="border-r border-[var(--hairline)] p-2">Role</div>
           {permissionColumns.map((column) => (
@@ -335,7 +379,7 @@ function RbacPanel() {
         ))}
       </div>
       <div className="mt-3 rounded-[var(--radius-card)] border border-[var(--hairline)] bg-[var(--canvas-soft)] p-3">
-        <p className="font-mono text-xs font-semibold text-[var(--ink)]">
+        <p className="font-mono text-xs font-semibold text-[var(--ink)] break-all">
           login • view event • edit rule • export evidence • delete/restore • backup job
         </p>
         <p className="mt-1 text-sm leading-snug text-[var(--body)]">
@@ -401,7 +445,7 @@ function BackupPanel() {
         ]}
       />
       <RecoveryTargetChips />
-      <div className="mt-4 grid grid-cols-4 gap-3">
+      <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-3">
         {backupScopes.map(([title, desc]) => (
           <div key={title} className="rounded-[var(--radius-card)] border border-[var(--hairline)] bg-[var(--canvas-soft)] p-3">
             <h4 className="text-sm font-semibold text-[var(--ink)]">{title}</h4>
@@ -443,7 +487,7 @@ function HardeningPanel() {
         title="Gia Lâm pilot hardening checklist"
         description="Bắt đầu bằng các kiểm soát thực dụng, dễ nghiệm thu và trực tiếp giảm rủi ro vận hành."
       />
-      <div className="mt-4 grid grid-cols-2 gap-3">
+      <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
         {hardeningGroups.map((group, groupIndex) => (
           <div key={group.title} className="rounded-[var(--radius-card)] border border-[var(--hairline)] bg-[var(--canvas-soft)] p-3">
             <h4 className={cn(

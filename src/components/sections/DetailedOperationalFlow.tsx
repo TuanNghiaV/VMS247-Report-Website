@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FlowArrow } from "../ui/FlowArrow";
 import { SectionShell } from "../layout/SectionShell";
+import { TechChapterLabel } from "../ui/TechChapter";
 import { flowNodes } from "../../data/flowNodes";
 import { cn } from "../../utils/cn";
 
@@ -133,22 +134,6 @@ const detailHeadingOverride: Record<number, { displayTitle: string; technicalTit
 
 const nodeById = Object.fromEntries(flowNodes.map((node) => [node.id, node])) as Record<number, FlowNode>;
 
-function DetailBlock({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="rounded-[var(--radius-card)] border border-[var(--hairline)] bg-[var(--surface)] px-3 py-2.5">
-      <div className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[var(--mute)]">
-        {title}
-      </div>
-      <div className="mt-1 text-xs leading-snug text-[var(--body)]">{children}</div>
-    </div>
-  );
-}
 
 function FlowNodeCard({
   nodeId,
@@ -305,6 +290,16 @@ export const DetailedOperationalFlow: React.FC<SectionProps> = ({
   isActive = false,
 }) => {
   const [selectedNodeId, setSelectedNodeId] = useState(1);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 1023px)");
+    const listener = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    setIsMobile(media.matches);
+    media.addEventListener("change", listener);
+    return () => media.removeEventListener("change", listener);
+  }, []);
+
   const selectedNode = nodeById[selectedNodeId] || flowNodes[0];
 
   const selectedLaneTitle =
@@ -322,10 +317,11 @@ export const DetailedOperationalFlow: React.FC<SectionProps> = ({
     <SectionShell
       id="data-flow"
       isActive={isActive}
-      className="px-6 md:px-8 lg:px-8 xl:px-10"
+      className="px-4 sm:px-6 md:px-8 lg:px-8 xl:px-10"
       contentClassName="relative z-10 mx-auto flex h-full min-h-0 w-full max-w-[1280px] flex-col justify-start"
     >
       <div className="mb-2 max-w-5xl md:mb-3">
+        <TechChapterLabel label="LUỒNG XỬ LÝ DỮ LIỆU" />
         <h2 className="text-2xl font-semibold tracking-tight text-[var(--ink)] md:text-3xl">
           Luồng xử lý dữ liệu chi tiết
         </h2>
@@ -334,88 +330,161 @@ export const DetailedOperationalFlow: React.FC<SectionProps> = ({
         </p>
       </div>
 
-      <div className="grid h-[calc(100svh-165px)] min-h-0 grid-cols-1 gap-4 overflow-hidden xl:grid-cols-[760px_400px] xl:justify-center xl:gap-6 2xl:grid-cols-[800px_440px]">
-        <div className="flex h-full min-h-0 flex-col gap-1 overflow-hidden xl:w-[760px] 2xl:w-[800px]">
-          {laneConfigs.map((lane, index) => (
-            <React.Fragment key={lane.key}>
-              <FlowLane
-                lane={lane}
-                selectedNodeId={selectedNodeId}
-                onSelect={setSelectedNodeId}
-              />
-              {index < laneConfigs.length - 1 && lane.handoffLabel ? (
-                <HandoffConnector
-                  label={lane.handoffLabel}
-                  active={selectedNodeId >= (lane.handoffTargetNodeId ?? Number.MAX_SAFE_INTEGER)}
-                />
-              ) : null}
-            </React.Fragment>
-          ))}
-        </div>
-
-        <aside
-          className="h-full min-h-0 rounded-[var(--radius-card)] border border-[var(--hairline-strong)] bg-[var(--surface-soft)] p-4"
-        >
-          <div className="flex h-full min-h-0 flex-col">
-            <div className="mb-3 border-b border-[var(--hairline)] pb-3">
-              <div className="mb-2 inline-flex rounded-[var(--radius-pill)] border border-[var(--hairline)] bg-[var(--surface)] px-2.5 py-1 text-[10px] uppercase tracking-[0.18em] text-[var(--mute)]">
-                {selectedLaneTitle}
-              </div>
-              <h3 className="text-[15px] font-semibold text-[var(--ink)] md:text-base">
-                Bước {selectedNode.id}: {detailTitle}
-              </h3>
-              <div className="mt-2 flex flex-wrap gap-1.5">
-                <span className="rounded-[var(--radius-pill)] border border-[var(--hairline)] bg-[var(--surface)] px-2.5 py-1 font-mono text-[10px] font-semibold text-[var(--body)]">
-                  {detailTechTitle}
-                </span>
-                <span className="rounded-[var(--radius-pill)] border border-[var(--hairline)] bg-[var(--surface)] px-2.5 py-1 font-mono text-[10px] font-semibold text-[var(--body)]">
-                  {selectedNode.keyTech}
-                </span>
-              </div>
-            </div>
-
-            <div className="grid min-h-0 flex-1 content-start gap-2.5 [&>*:nth-child(n+6)]:hidden">
-              <DetailBlock title="1. Mô tả dễ hiểu">
-                {selectedNode.simpleDescription}
-              </DetailBlock>
-
-              <DetailBlock title="2. Đầu vào">
-                {selectedNode.input}
-              </DetailBlock>
-
-              <DetailBlock title="3. Hệ thống làm gì">
-                {selectedNode.process}
-              </DetailBlock>
-
-              <DetailBlock title="4. Đầu ra">
-                {selectedNode.output}
-              </DetailBlock>
-
-              <DetailBlock title="Điểm cần kiểm tra">
-                {selectedNode.riskNote}
-              </DetailBlock>
-
-              <DetailBlock title="5. Công nghệ lõi">
-                <div className="inline-flex max-w-full rounded-full border border-[var(--hairline)] bg-[var(--surface)] px-3 py-1.5 font-mono text-xs text-[var(--ink)]">
-                  {selectedNode.keyTech}
+      {isMobile ? (
+        <div className="flex-1 overflow-visible space-y-4 mt-2" data-section-nav-ignore="true">
+          {laneConfigs.map((lane) => {
+            const laneNodes = lane.items.filter((item) => item.type === "node");
+            return (
+              <div key={lane.key} className="bg-[var(--surface-soft)] p-3.5 rounded-[var(--radius-card)] border border-[var(--hairline)]">
+                <div className="mb-3">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--primary)]">{lane.title}</h3>
+                  <p className="text-[10px] text-[var(--body)] mt-0.5">{lane.subtitle}</p>
                 </div>
-              </DetailBlock>
+                <div className="grid grid-cols-1 gap-2">
+                  {laneNodes.map((item) => {
+                    const node = nodeById[item.id];
+                    const isNodeActive = selectedNodeId === item.id;
+                    return (
+                      <React.Fragment key={item.id}>
+                        <button
+                          onClick={() => setSelectedNodeId(item.id)}
+                          className={cn(
+                            "w-full flex items-center gap-3 p-3 rounded-[var(--radius-card)] border text-left transition-all",
+                            isNodeActive
+                              ? "border-[var(--ink)] bg-[var(--surface)] ring-2 ring-[var(--ink)]/15 shadow-sm"
+                              : "border-[var(--hairline)] bg-[var(--surface)] hover:border-[var(--body)]"
+                          )}
+                        >
+                          <span className={cn(
+                            "grid h-5 w-5 shrink-0 place-items-center rounded-full border text-[10px] font-semibold transition-colors",
+                            isNodeActive
+                              ? "border-[var(--primary)] bg-[var(--primary)] text-[var(--primary-text)]"
+                              : "border-[var(--hairline)] bg-[var(--surface-soft)] text-[var(--mute)]"
+                          )}>
+                            {item.id}
+                          </span>
+                          <div className="flex-1 min-w-0">
+                            <h4 className="text-xs font-semibold text-[var(--ink)] leading-tight">
+                              {stationLabelMap[item.id] || node.displayTitle}
+                            </h4>
+                            <p className="text-[10px] text-[var(--body)] mt-0.5 font-mono truncate">
+                              {stationTechMap[item.id] || node.technicalTitle}
+                            </p>
+                          </div>
+                        </button>
 
-              <DetailBlock title="6. Vì sao cần">
-                <p className="text-[var(--body)]">{selectedNode.whyNeeded}</p>
-              </DetailBlock>
-
-              <DetailBlock title="7. Điểm cần lưu ý / rủi ro">
-                <p className="text-[var(--body)]">{selectedNode.riskNote}</p>
-              </DetailBlock>
-
-              <DetailBlock title="8. Khuyến nghị cho pilot Gia Lâm">
-                <p className="text-[var(--body)]">{selectedNode.pilotRecommendation}</p>
-              </DetailBlock>
-            </div>
+                        {isNodeActive && (
+                          <div className="border border-[var(--hairline)] bg-[var(--surface)] p-3.5 rounded-[var(--radius-card)] space-y-3.5 my-1.5 shadow-xs">
+                            <div className="border-b border-[var(--hairline)] pb-2.5">
+                              <div className="mb-1.5 inline-flex rounded-full border border-[var(--hairline)] bg-[var(--surface-soft)] px-2.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-[var(--mute)]">
+                                {selectedLaneTitle}
+                              </div>
+                              <h5 className="text-xs font-bold text-[var(--ink)]">Bước {item.id}: {detailTitle}</h5>
+                              <p className="font-mono text-[9px] text-[var(--body)] mt-0.5">{detailTechTitle}</p>
+                            </div>
+                            <div className="space-y-3 text-xs">
+                              <div>
+                                <span className="text-[9px] font-bold uppercase tracking-wider text-[var(--mute)]">Mục tiêu</span>
+                                <p className="text-xs text-[var(--ink)] mt-0.5 font-medium leading-normal">{node.simpleDescription}</p>
+                              </div>
+                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <div className="rounded-[var(--radius-card)] border border-[var(--hairline)] bg-[var(--surface-soft)] p-2">
+                                  <span className="text-[9px] font-bold uppercase tracking-wider text-[var(--mute)]">Đầu vào</span>
+                                  <p className="text-[11px] text-[var(--body)] mt-0.5 leading-snug">{node.input}</p>
+                                </div>
+                                <div className="rounded-[var(--radius-card)] border border-[var(--hairline)] bg-[var(--surface-soft)] p-2">
+                                  <span className="text-[9px] font-bold uppercase tracking-wider text-[var(--mute)]">Đầu ra</span>
+                                  <p className="text-[11px] text-[var(--body)] mt-0.5 leading-snug">{node.output}</p>
+                                </div>
+                              </div>
+                              <div>
+                                <span className="text-[9px] font-bold uppercase tracking-wider text-[var(--mute)]">Xử lý chính</span>
+                                <p className="text-xs text-[var(--ink)] mt-0.5 font-medium leading-normal">{node.process}</p>
+                              </div>
+                              <div>
+                                <span className="text-[9px] font-bold uppercase tracking-wider text-[var(--mute)]">Điểm cần kiểm tra</span>
+                                <p className="text-xs text-[var(--ink)] mt-0.5 font-medium leading-normal">{node.riskNote}</p>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </React.Fragment>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      ) : (
+        <div className="grid h-[calc(100svh-170px)] min-h-0 grid-cols-1 gap-4 overflow-hidden xl:grid-cols-[760px_400px] xl:justify-center xl:gap-6 2xl:grid-cols-[800px_440px]">
+          <div className="flex h-full min-h-0 flex-col gap-1 overflow-hidden xl:w-[760px] 2xl:w-[800px]">
+            {laneConfigs.map((lane, index) => (
+              <React.Fragment key={lane.key}>
+                <FlowLane
+                  lane={lane}
+                  selectedNodeId={selectedNodeId}
+                  onSelect={setSelectedNodeId}
+                />
+                {index < laneConfigs.length - 1 && lane.handoffLabel ? (
+                  <HandoffConnector
+                    label={lane.handoffLabel}
+                    active={selectedNodeId >= (lane.handoffTargetNodeId ?? Number.MAX_SAFE_INTEGER)}
+                  />
+                ) : null}
+              </React.Fragment>
+            ))}
           </div>
-        </aside>
-      </div>
+
+          <aside
+            className="h-full min-h-0 rounded-[var(--radius-card)] border border-[var(--hairline-strong)] bg-[var(--surface-soft)] p-4 flex flex-col justify-between"
+          >
+            <div className="flex h-full min-h-0 flex-col">
+              <div className="mb-3 border-b border-[var(--hairline)] pb-3">
+                <div className="mb-2 inline-flex rounded-[var(--radius-pill)] border border-[var(--hairline)] bg-[var(--surface)] px-2.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-[var(--mute)]">
+                  {selectedLaneTitle}
+                </div>
+                <h3 className="text-sm font-bold text-[var(--ink)] md:text-base">
+                  Bước {selectedNode.id}: {detailTitle}
+                </h3>
+                <p className="font-mono text-[10px] text-[var(--body)] font-medium mt-0.5">{detailTechTitle}</p>
+              </div>
+
+              <div className="flex-1 flex flex-col gap-2 mt-3 min-h-0 justify-start overflow-hidden">
+                {/* Mục tiêu */}
+                <div className="rounded-[var(--radius-card)] border border-[var(--hairline)] bg-[var(--surface)] p-2.5">
+                  <div className="text-[9px] font-bold uppercase tracking-wider text-[var(--mute)] mb-0.5">Mục tiêu</div>
+                  <p className="text-xs leading-normal text-[var(--ink)] font-medium">{selectedNode.simpleDescription}</p>
+                </div>
+
+                {/* Đầu vào / Đầu ra Grid */}
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="rounded-[var(--radius-card)] border border-[var(--hairline)] bg-[var(--surface)] p-2.5">
+                    <div className="text-[9px] font-bold uppercase tracking-wider text-[var(--mute)] mb-0.5">Đầu vào</div>
+                    <p className="text-[11px] leading-snug text-[var(--body)] font-medium">{selectedNode.input}</p>
+                  </div>
+                  <div className="rounded-[var(--radius-card)] border border-[var(--hairline)] bg-[var(--surface)] p-2.5">
+                    <div className="text-[9px] font-bold uppercase tracking-wider text-[var(--mute)] mb-0.5">Đầu ra</div>
+                    <p className="text-[11px] leading-snug text-[var(--body)] font-medium">{selectedNode.output}</p>
+                  </div>
+                </div>
+
+                {/* Xử lý chính */}
+                <div className="rounded-[var(--radius-card)] border border-[var(--hairline)] bg-[var(--surface)] p-2.5">
+                  <div className="text-[9px] font-bold uppercase tracking-wider text-[var(--mute)] mb-0.5">Xử lý chính</div>
+                  <p className="text-xs leading-normal text-[var(--ink)] font-medium">{selectedNode.process}</p>
+                </div>
+
+                {/* Điểm cần kiểm tra */}
+                <div className="rounded-[var(--radius-card)] border border-[var(--hairline)] bg-[var(--surface)] p-2.5">
+                  <div className="text-[9px] font-bold uppercase tracking-wider text-[var(--mute)] mb-0.5">Điểm cần kiểm tra</div>
+                  <p className="text-xs leading-normal text-[var(--ink)] font-medium">{selectedNode.riskNote}</p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      )}
     </SectionShell>
   );
 };

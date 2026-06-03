@@ -126,7 +126,7 @@ export const ArchitectureOverview: React.FC<SectionProps> = ({
       className="pt-16 pb-5 px-6 md:px-10 lg:px-16"
     >
       <div className="mb-3">
-        <TechChapterLabel index={2} />
+        <TechChapterLabel label="KIẾN TRÚC HỆ THỐNG" />
         <h2 className="text-2xl font-semibold tracking-tight text-[var(--ink)] md:text-3xl">
           Tổng Quan Kiến Trúc
         </h2>

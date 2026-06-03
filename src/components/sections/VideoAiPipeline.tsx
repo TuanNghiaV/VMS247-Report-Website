@@ -48,7 +48,7 @@ export const VideoAiPipeline: React.FC<SectionProps> = ({
   return (
     <SectionShell id="video-ai-pipeline" isActive={isActive}>
       <div className="mb-3">
-        <TechChapterLabel index={3} />
+        <TechChapterLabel label="VIDEO AI PIPELINE" />
         <h2 className="text-2xl font-semibold tracking-tight text-[var(--ink)] md:text-3xl">
           Pipeline xử lý video AI bằng GPU
         </h2>
@@ -63,7 +63,7 @@ export const VideoAiPipeline: React.FC<SectionProps> = ({
       />
 
       <div
-        className="grid flex-1 grid-cols-1 items-start gap-4 overflow-hidden lg:grid-cols-3"
+        className="grid flex-1 grid-cols-1 items-start gap-4 overflow-visible sm:overflow-hidden lg:grid-cols-3"
         data-section-nav-ignore="true"
       >
         <div className="lg:col-span-2">

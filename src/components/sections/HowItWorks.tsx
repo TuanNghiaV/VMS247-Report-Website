@@ -187,8 +187,8 @@ function OperationalStageNode({
   index: number;
   step: OperationalStep;
   isActive: boolean;
-  showArrow: boolean;
   onSelect: () => void;
+  showArrow: boolean;
 }) {
   const Icon = step.icon;
   const toneStyle = toneStyles[step.tone];
@@ -198,27 +198,27 @@ function OperationalStageNode({
       type="button"
       onClick={onSelect}
       className={cn(
-        "relative flex min-h-[168px] flex-col rounded-[var(--radius-card)] border p-3 text-left transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] hover:-translate-y-0.5 hover:shadow-sm",
+        "relative flex min-h-0 md:min-h-[168px] flex-row md:flex-col items-center md:items-stretch gap-3 md:gap-0 rounded-[var(--radius-card)] border p-3 text-left transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] hover:-translate-y-0.5 hover:shadow-sm",
         toneStyle.node,
         isActive && toneStyle.active
       )}
     >
       {isActive && (
-        <span className={cn("absolute inset-x-4 top-0 h-0.5 rounded-full", toneStyle.accent)} />
+        <span className={cn("absolute inset-y-2 left-0 w-0.5 md:inset-x-4 md:top-0 md:h-0.5 md:w-auto rounded-full", toneStyle.accent)} />
       )}
-      <div className="mb-2 flex items-center justify-between gap-2">
+      <div className="flex md:flex-row items-center justify-between gap-2 shrink-0 md:mb-2">
         <span
           className={cn(
-            "grid h-9 w-9 shrink-0 place-items-center rounded-[var(--radius-pill)] transition-all duration-200",
+            "grid h-8 w-8 md:h-9 md:w-9 shrink-0 place-items-center rounded-[var(--radius-pill)] transition-all duration-200",
             toneStyle.icon,
             isActive && "scale-105 ring-2"
           )}
         >
-          <Icon className="h-4.5 w-4.5" />
+          <Icon className="h-4 w-4 md:h-4.5 md:w-4.5" />
         </span>
         <span
           className={cn(
-            "rounded-[var(--radius-pill)] px-2 py-0.5 font-mono text-[10px] font-semibold uppercase transition-all duration-200",
+            "hidden md:inline-flex rounded-[var(--radius-pill)] px-2 py-0.5 font-mono text-[10px] font-semibold uppercase transition-all duration-200",
             toneStyle.badge,
             isActive && "scale-105 ring-2"
           )}
@@ -227,15 +227,20 @@ function OperationalStageNode({
         </span>
       </div>
 
-      <h4 className="text-[15px] font-semibold leading-tight text-[var(--ink)]">
-        {step.title}
-      </h4>
-      <p className="mt-1 text-[11px] font-semibold leading-snug text-[var(--mute)]">
-        {step.subtitle}
-      </p>
-      <p className="mt-2 text-xs leading-snug text-[var(--body)]">
-        {step.description}
-      </p>
+      <div className="min-w-0 flex-1 md:mt-2">
+        <div className="flex items-center gap-2">
+          <span className="font-mono text-[9px] text-[var(--mute)] md:hidden">0{index + 1}</span>
+          <h4 className="text-[14px] md:text-[15px] font-semibold leading-tight text-[var(--ink)]">
+            {step.title}
+          </h4>
+        </div>
+        <p className="mt-0.5 text-[10px] md:text-[11px] font-semibold leading-snug text-[var(--mute)]">
+          {step.subtitle}
+        </p>
+        <p className="mt-1 md:mt-2 text-xs leading-snug text-[var(--body)] hidden sm:block">
+          {step.description}
+        </p>
+      </div>
 
       {showArrow ? (
         <div

@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { SectionShell } from "../layout/SectionShell";
 import { GlassCard } from "../ui/GlassCard";
+import { TechChapterLabel } from "../ui/TechChapter";
 
 interface SectionProps {
   isActive?: boolean;
@@ -65,6 +66,7 @@ export const CostRecommendation: React.FC<SectionProps> = ({
       contentClassName="max-w-6xl"
     >
       <div className="mb-5">
+        <TechChapterLabel label="KẾT LUẬN TRIỂN KHAI" />
         <h2 className="text-2xl md:text-4xl font-bold text-[var(--ink)] tracking-tight">
           Kết luận & Khuyến nghị triển khai pilot
         </h2>
@@ -75,10 +77,10 @@ export const CostRecommendation: React.FC<SectionProps> = ({
       </div>
 
       <div
-        className="grid grid-cols-1 lg:grid-cols-3 gap-5 flex-1 overflow-hidden"
+        className="grid grid-cols-1 lg:grid-cols-3 gap-5 flex-1 lg:overflow-hidden overflow-visible"
         data-section-nav-ignore="true"
       >
-        <div className="lg:col-span-2 flex flex-col gap-4 overflow-y-auto pr-1 max-h-[calc(100svh-210px)]">
+        <div className="lg:col-span-2 flex flex-col gap-4 lg:overflow-y-auto overflow-visible pr-1 lg:max-h-[calc(100svh-210px)] max-h-none">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {decisionGroups.map((group) => (
               <GlassCard
@@ -115,7 +117,7 @@ export const CostRecommendation: React.FC<SectionProps> = ({
               {nextSteps.map((step, index) => (
                 <div
                   key={step}
-                  className="rounded-[var(--radius-card)] border border-[var(--hairline)] bg-[var(--canvas-soft)] p-3 min-h-[104px]"
+                  className="rounded-[var(--radius-card)] border border-[var(--hairline)] bg-[var(--canvas-soft)] p-3 min-h-0 md:min-h-[104px]"
                 >
                   <span className="inline-flex h-7 w-7 items-center justify-center rounded-[var(--radius-pill)] bg-[var(--ink)] text-[var(--canvas)] text-xs font-bold font-mono">
                     {index + 1}
@@ -129,7 +131,7 @@ export const CostRecommendation: React.FC<SectionProps> = ({
           </GlassCard>
         </div>
 
-        <div className="flex flex-col gap-4 overflow-y-auto max-h-[calc(100svh-210px)] pr-1">
+        <div className="flex flex-col gap-4 lg:overflow-y-auto overflow-visible lg:max-h-[calc(100svh-210px)] max-h-none pr-1">
           <GlassCard
             className="p-5 border border-[var(--hairline-strong)]"
             hoverGlow={false}

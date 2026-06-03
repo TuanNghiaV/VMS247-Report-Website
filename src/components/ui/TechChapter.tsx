@@ -2,6 +2,8 @@ import React from "react";
 import { TechBadge } from "./TechBadge";
 import type { TechStatus } from "./TechBadge";
 
+import { cn } from "../../utils/cn";
+
 type ClassificationGroup = {
   title: string;
   status: TechStatus;
@@ -9,8 +11,8 @@ type ClassificationGroup = {
 };
 
 interface TechChapterLabelProps {
-  index: number;
-  total?: number;
+  label: string;
+  className?: string;
 }
 
 interface ClassificationStripProps {
@@ -19,11 +21,11 @@ interface ClassificationStripProps {
 }
 
 export const TechChapterLabel: React.FC<TechChapterLabelProps> = ({
-  index,
-  total = 6,
+  label,
+  className,
 }) => (
-  <div className="mb-2 inline-flex rounded-[var(--radius-pill)] border border-[var(--hairline)] bg-[var(--surface-soft)] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-[var(--mute)]">
-    Nghiên cứu công nghệ khả thi · {index}/{total}
+  <div className={cn("mb-2 inline-flex rounded-[var(--radius-pill)] border border-[var(--hairline)] bg-[var(--surface-soft)] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-[var(--mute)]", className)}>
+    {label}
   </div>
 );
 

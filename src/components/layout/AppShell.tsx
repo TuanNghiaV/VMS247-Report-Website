@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { SECTIONS } from "../../data/sections";
 import { Header } from "./Header";
 import { ProgressDots } from "./ProgressDots";
+import { cn } from "../../utils/cn";
 
 interface AppShellProps {
   children: React.ReactNode;
@@ -14,13 +15,30 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
   });
 
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
   const totalSections = SECTIONS.length;
   const isLocked = useRef(false);
   const lockTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  // Check mobile status
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 640px)");
+    const listener = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    setIsMobile(media.matches);
+    media.addEventListener("change", listener);
+    return () => media.removeEventListener("change", listener);
+  }, []);
+
   const onNavigate = (index: number) => {
     if (index >= 0 && index < totalSections) {
       setActiveIndex(index);
+      if (isMobile) {
+        const id = SECTIONS[index].id;
+        const el = document.getElementById(id);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth" });
+        }
+      }
     }
   };
 
@@ -36,27 +54,27 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
 
+  // Section Wheel and Keyboard navigation for Desktop
   useEffect(() => {
+    if (isMobile) return;
+
     const handleWheel = (e: WheelEvent) => {
       if (document.body.dataset.modalOpen === "true") {
         e.preventDefault();
         return;
       }
 
-      // 1. Check if the target is within a scrollable area that is flagged to ignore section navigation
       const target = e.target as HTMLElement | null;
       if (target && target.closest('[data-section-nav-ignore="true"]')) {
-        return; // Let the container scroll normally
+        return;
       }
 
-      // Prevent default page scroll behavior
       e.preventDefault();
 
-      // 2. Throttle/debounce wheel events to prevent rapid multi-slide skipping
       if (isLocked.current) return;
 
       const deltaY = e.deltaY;
-      if (Math.abs(deltaY) < 10) return; // Ignore small accidental scroll jitters
+      if (Math.abs(deltaY) < 10) return;
 
       if (deltaY > 0) {
         setActiveIndex((prev) => Math.min(prev + 1, totalSections - 1));
@@ -64,7 +82,6 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
         setActiveIndex((prev) => Math.max(prev - 1, 0));
       }
 
-      // Lock scrolling for 800ms to allow transition to finish
       isLocked.current = true;
       lockTimeout.current = setTimeout(() => {
         isLocked.current = false;
@@ -113,7 +130,6 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
       }
     };
 
-    // Attach passive: false to allow e.preventDefault() in wheel handler
     window.addEventListener("wheel", handleWheel, { passive: false });
     window.addEventListener("keydown", handleKeyDown);
 
@@ -122,7 +138,40 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
       window.removeEventListener("keydown", handleKeyDown);
       if (lockTimeout.current) clearTimeout(lockTimeout.current);
     };
-  }, [totalSections]);
+  }, [totalSections, isMobile]);
+
+  // Mobile Scrolling synchronization using IntersectionObserver
+  useEffect(() => {
+    if (!isMobile) return;
+
+    const observerOptions = {
+      root: null,
+      rootMargin: "-20% 0px -65% 0px",
+      threshold: 0,
+    };
+
+    const handleIntersection = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          const idx = SECTIONS.findIndex((s) => s.id === id);
+          if (idx !== -1) {
+            setActiveIndex(idx);
+          }
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(handleIntersection, observerOptions);
+    SECTIONS.forEach((s) => {
+      const el = document.getElementById(s.id);
+      if (el) observer.observe(el);
+    });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [isMobile]);
 
   // Clone children to pass active status and current activeIndex
   const childrenWithActiveState = React.Children.map(children, (child, index) => {
@@ -133,8 +182,8 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
           onNavigate?: (index: number) => void;
         }>,
         {
-        isActive: index === activeIndex,
-        onNavigate: onNavigate,
+          isActive: index === activeIndex,
+          onNavigate: onNavigate,
         }
       );
     }
@@ -142,7 +191,12 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
   });
 
   return (
-    <div className="w-full h-[100svh] overflow-hidden bg-[var(--bg)] text-[var(--text)] transition-colors duration-300 relative">
+    <div
+      className={cn(
+        "w-full bg-[var(--canvas)] text-[var(--ink)] transition-colors duration-300 relative",
+        isMobile ? "h-[100svh] overflow-y-auto" : "h-[100svh] overflow-hidden"
+      )}
+    >
       <Header
         sections={SECTIONS}
         activeIndex={activeIndex}
@@ -151,19 +205,26 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
         onToggleTheme={toggleTheme}
       />
 
-      {/* Main Container moving by translateY */}
+      {/* Main Container */}
       <div
-        className="w-full h-full transition-transform duration-700 ease-in-out"
-        style={{ transform: `translateY(-${activeIndex * 100}svh)` }}
+        className={cn(
+          "w-full",
+          isMobile
+            ? "flex flex-col pt-14"
+            : "h-full transition-transform duration-700 ease-in-out"
+        )}
+        style={isMobile ? undefined : { transform: `translateY(-${activeIndex * 100}svh)` }}
       >
         {childrenWithActiveState}
       </div>
 
-      <ProgressDots
-        sections={SECTIONS}
-        activeIndex={activeIndex}
-        onNavigate={onNavigate}
-      />
+      {!isMobile && (
+        <ProgressDots
+          sections={SECTIONS}
+          activeIndex={activeIndex}
+          onNavigate={onNavigate}
+        />
+      )}
     </div>
   );
 };

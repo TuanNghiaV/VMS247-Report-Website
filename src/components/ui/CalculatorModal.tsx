@@ -57,24 +57,24 @@ export const CalculatorModal: React.FC<CalculatorModalProps> = ({
       />
 
       <div
-        className="relative z-10 flex max-h-[90vh] w-full max-w-4xl flex-col overflow-hidden rounded-[var(--radius-card)] border border-[var(--hairline-strong)] bg-[var(--surface)] shadow-[var(--shadow-card)]"
+        className="relative z-10 flex max-h-[92vh] sm:max-h-[90vh] w-full max-w-4xl flex-col overflow-hidden rounded-[var(--radius-card)] border border-[var(--hairline-strong)] bg-[var(--surface)] shadow-[var(--shadow-card)] h-[85vh] sm:h-auto"
         onClick={(e) => e.stopPropagation()}
         data-section-nav-ignore="true"
         onWheel={(e) => e.stopPropagation()}
         onKeyDown={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-start justify-between p-5 border-b border-[var(--hairline)]">
-          <div className="space-y-1">
-            <h3 className="text-lg font-bold text-[var(--ink)]">{title}</h3>
+        <div className="flex items-start justify-between p-4 sm:p-5 border-b border-[var(--hairline)]">
+          <div className="space-y-1 pr-6">
+            <h3 className="text-base sm:text-lg font-bold text-[var(--ink)]">{title}</h3>
             {description && (
-              <p className="text-xs text-[var(--mute)]">{description}</p>
+              <p className="text-[11px] sm:text-xs text-[var(--mute)]">{description}</p>
             )}
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="p-1 rounded-full text-[var(--mute)] hover:text-[var(--ink)] hover:bg-[var(--canvas-soft)] transition-colors cursor-pointer"
+            className="p-2.5 rounded-full text-[var(--mute)] hover:text-[var(--ink)] hover:bg-[var(--canvas-soft)] transition-colors cursor-pointer w-10 h-10 flex items-center justify-center shrink-0"
             aria-label="Đóng bảng tính"
           >
             <X className="h-5 w-5" />
@@ -83,7 +83,7 @@ export const CalculatorModal: React.FC<CalculatorModalProps> = ({
 
         {/* Scrollable Body */}
         <div
-          className="flex-1 overflow-y-auto p-6"
+          className="flex-1 overflow-y-auto p-4 sm:p-6"
           data-section-nav-ignore="true"
         >
           {children}

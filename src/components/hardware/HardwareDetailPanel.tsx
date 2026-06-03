@@ -14,7 +14,7 @@ export const HardwareDetailPanel: React.FC<HardwareDetailPanelProps> = ({
 }) => {
   return (
     <div
-      className="flex-1 flex flex-col justify-between overflow-y-auto rounded-[var(--radius-card)] border border-[var(--hairline-strong)] bg-[var(--surface)] p-4 max-h-[460px] xl:max-h-none"
+      className="flex-1 flex flex-col justify-between overflow-y-auto rounded-[var(--radius-card)] border border-[var(--hairline-strong)] bg-[var(--surface)] p-4 lg:max-h-[460px] xl:max-h-none max-h-none"
       data-section-nav-ignore="true"
     >
       <div>

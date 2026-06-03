@@ -54,7 +54,7 @@ export const FullTechStackMatrix: React.FC<SectionProps> = ({
   return (
     <SectionShell id="tech-stack-explorer" isActive={isActive}>
       <div className="mb-3">
-        <TechChapterLabel index={1} />
+        <TechChapterLabel label="NGHIÊN CỨU CÔNG NGHỆ" />
         <h2 className="text-2xl font-semibold tracking-tight text-[var(--ink)] md:text-3xl">
           Nghiên cứu công nghệ khả thi
         </h2>
@@ -82,8 +82,8 @@ export const FullTechStackMatrix: React.FC<SectionProps> = ({
         ))}
       </div>
 
-      <div className="grid flex-1 grid-cols-1 gap-6 overflow-hidden lg:grid-cols-3" data-section-nav-ignore="true">
-        <div className="flex max-h-[calc(100svh-330px)] flex-col gap-3 overflow-y-auto pr-1 lg:col-span-2">
+      <div className="grid flex-1 grid-cols-1 gap-6 overflow-visible sm:overflow-hidden lg:grid-cols-3" data-section-nav-ignore="true">
+        <div className="flex max-h-none sm:max-h-[calc(100svh-330px)] flex-col gap-3 sm:overflow-y-auto pr-1 lg:col-span-2">
           <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
             {selectedCategory.items.map((item) => {
               const status = item.status ?? "future";
@@ -112,7 +112,7 @@ export const FullTechStackMatrix: React.FC<SectionProps> = ({
           </div>
         </div>
 
-        <div className="max-h-[calc(100svh-330px)] overflow-y-auto pr-1">
+        <div className="max-h-none sm:max-h-[calc(100svh-330px)] sm:overflow-y-auto pr-1">
           {selectedTech ? (
             <GlassCard className="border border-[var(--hairline-strong)] p-5" hoverGlow={false}>
               <div className="mb-3 flex items-start justify-between gap-3 border-b border-[var(--hairline)] pb-3">

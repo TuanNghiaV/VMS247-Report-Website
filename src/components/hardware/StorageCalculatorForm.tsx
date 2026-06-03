@@ -59,7 +59,7 @@ export const StorageCalculatorForm: React.FC<StorageCalculatorFormProps> = () =>
               value={cameraCount}
               min={1}
               onChange={(e) => setCameraCount(Math.max(1, parseInt(e.target.value) || 1))}
-              className="h-8 w-full rounded-[var(--radius-pill)] border border-[var(--hairline-strong)] bg-[var(--canvas-soft)] px-3 text-[var(--ink)] font-mono focus:outline-none"
+              className="h-10 sm:h-8 w-full rounded-[var(--radius-pill)] border border-[var(--hairline-strong)] bg-[var(--canvas-soft)] px-3 text-[var(--ink)] font-mono focus:outline-none"
             />
           </div>
           <div>
@@ -67,7 +67,7 @@ export const StorageCalculatorForm: React.FC<StorageCalculatorFormProps> = () =>
             <select
               value={bitrate}
               onChange={(e) => setBitrate(parseInt(e.target.value))}
-              className="h-8 w-full rounded-[var(--radius-pill)] border border-[var(--hairline-strong)] bg-[var(--canvas-soft)] px-2.5 text-[var(--ink)] font-mono focus:outline-none"
+              className="h-10 sm:h-8 w-full rounded-[var(--radius-pill)] border border-[var(--hairline-strong)] bg-[var(--canvas-soft)] px-2.5 text-[var(--ink)] font-mono focus:outline-none"
             >
               <option value={2}>2 Mbps (720p / H.265)</option>
               <option value={4}>4 Mbps (1080p Standard)</option>
@@ -85,7 +85,7 @@ export const StorageCalculatorForm: React.FC<StorageCalculatorFormProps> = () =>
               value={retention}
               min={1}
               onChange={(e) => setRetention(Math.max(1, parseInt(e.target.value) || 1))}
-              className="h-8 w-full rounded-[var(--radius-pill)] border border-[var(--hairline-strong)] bg-[var(--canvas-soft)] px-3 text-[var(--ink)] font-mono focus:outline-none"
+              className="h-10 sm:h-8 w-full rounded-[var(--radius-pill)] border border-[var(--hairline-strong)] bg-[var(--canvas-soft)] px-3 text-[var(--ink)] font-mono focus:outline-none"
             />
           </div>
           <div>
@@ -93,7 +93,7 @@ export const StorageCalculatorForm: React.FC<StorageCalculatorFormProps> = () =>
             <select
               value={diskSize}
               onChange={(e) => setDiskSize(parseInt(e.target.value))}
-              className="h-8 w-full rounded-[var(--radius-pill)] border border-[var(--hairline-strong)] bg-[var(--canvas-soft)] px-2.5 text-[var(--ink)] font-mono focus:outline-none"
+              className="h-10 sm:h-8 w-full rounded-[var(--radius-pill)] border border-[var(--hairline-strong)] bg-[var(--canvas-soft)] px-2.5 text-[var(--ink)] font-mono focus:outline-none"
             >
               {[4, 6, 8, 10, 12, 16, 20].map((v) => (
                 <option key={v} value={v}>{v} TB</option>
@@ -110,7 +110,7 @@ export const StorageCalculatorForm: React.FC<StorageCalculatorFormProps> = () =>
               value={diskCount}
               min={1}
               onChange={(e) => setDiskCount(Math.max(1, parseInt(e.target.value) || 1))}
-              className="h-8 w-full rounded-[var(--radius-pill)] border border-[var(--hairline-strong)] bg-[var(--canvas-soft)] px-3 text-[var(--ink)] font-mono focus:outline-none"
+              className="h-10 sm:h-8 w-full rounded-[var(--radius-pill)] border border-[var(--hairline-strong)] bg-[var(--canvas-soft)] px-3 text-[var(--ink)] font-mono focus:outline-none"
             />
           </div>
           <div>
@@ -118,7 +118,7 @@ export const StorageCalculatorForm: React.FC<StorageCalculatorFormProps> = () =>
             <select
               value={raidMode}
               onChange={(e) => setRaidMode(e.target.value as any)}
-              className="h-8 w-full rounded-[var(--radius-pill)] border border-[var(--hairline-strong)] bg-[var(--canvas-soft)] px-2.5 text-[var(--ink)] font-mono focus:outline-none"
+              className="h-10 sm:h-8 w-full rounded-[var(--radius-pill)] border border-[var(--hairline-strong)] bg-[var(--canvas-soft)] px-2.5 text-[var(--ink)] font-mono focus:outline-none"
             >
               <option value="No RAID">No RAID</option>
               <option value="RAID 5">RAID 5</option>

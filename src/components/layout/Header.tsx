@@ -59,7 +59,7 @@ export const Header: React.FC<HeaderProps> = ({
   }, []);
 
   return (
-    <header className="fixed top-0 left-0 right-0 h-14 bg-[var(--canvas)] border-b border-[var(--hairline)] z-50 flex items-center justify-between px-6 md:px-12 select-none transition-colors duration-300">
+    <header className="fixed top-0 left-0 right-0 h-14 bg-[var(--canvas)] border-b border-[var(--hairline)] z-50 flex items-center justify-between px-3 sm:px-6 md:px-12 select-none transition-colors duration-300">
       {/* Left: Brand logo */}
       <div className="flex items-center gap-2 shrink-0">
         <Cpu className="h-4 w-4 text-[var(--ink)]" />
@@ -79,7 +79,7 @@ export const Header: React.FC<HeaderProps> = ({
           ref={buttonRef}
           onClick={() => setIsDropdownOpen(!isDropdownOpen)}
           className={cn(
-            "flex items-center gap-2 px-3 py-1.5 md:px-4 rounded-[var(--radius-pill)] border transition-all cursor-pointer text-xs font-semibold select-none shadow-xs max-w-[240px] sm:max-w-xs md:max-w-md",
+            "flex items-center gap-1.5 px-2.5 py-1.5 sm:gap-2 sm:px-4 rounded-[var(--radius-pill)] border transition-all cursor-pointer text-xs font-semibold select-none shadow-xs max-w-[150px] xs:max-w-[190px] sm:max-w-xs md:max-w-md",
             isDropdownOpen
               ? "border-[var(--ink)] bg-[var(--surface)] text-[var(--ink)] ring-2 ring-[var(--ink)]/10"
               : "border-[var(--hairline-strong)] bg-[var(--surface-soft)] hover:bg-[var(--surface)] text-[var(--ink)]"
@@ -97,7 +97,7 @@ export const Header: React.FC<HeaderProps> = ({
           </span>
           <span
             className={cn(
-              "text-[var(--mute)] ml-1 text-[8px] transition-transform duration-200 shrink-0",
+              "text-[var(--mute)] ml-0.5 text-[8px] transition-transform duration-200 shrink-0",
               isDropdownOpen && "rotate-180 text-[var(--body)]"
             )}
           >
@@ -109,7 +109,7 @@ export const Header: React.FC<HeaderProps> = ({
         {isDropdownOpen && (
           <div
             ref={dropdownRef}
-            className="absolute top-11 left-1/2 -translate-x-1/2 w-64 md:w-72 max-h-72 overflow-y-auto bg-[var(--surface)] border border-[var(--hairline-strong)] rounded-[var(--radius-card)] shadow-lg z-50 py-1.5 flex flex-col"
+            className="absolute top-11 left-1/2 -translate-x-1/2 w-[calc(100vw-2rem)] sm:w-72 max-h-[60vh] sm:max-h-72 overflow-y-auto bg-[var(--surface)] border border-[var(--hairline-strong)] rounded-[var(--radius-card)] shadow-lg z-50 py-1.5 flex flex-col"
             data-section-nav-ignore="true"
             role="listbox"
           >
@@ -143,38 +143,38 @@ export const Header: React.FC<HeaderProps> = ({
       </div>
 
       {/* Right: Controls & Theme Toggle */}
-      <div className="flex items-center gap-2 md:gap-3 shrink-0">
+      <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
         <div className="flex items-center gap-1">
           <button
             onClick={() => onNavigate(activeIndex - 1)}
             disabled={activeIndex === 0}
-            className="p-1.5 rounded-[var(--radius-pill)] border border-[var(--hairline-strong)] bg-[var(--canvas)] text-[var(--ink)] hover:bg-[var(--canvas-soft)] disabled:opacity-30 disabled:pointer-events-none transition-all cursor-pointer"
+            className="p-2 sm:p-1.5 h-9 w-9 sm:h-auto sm:w-auto flex items-center justify-center rounded-[var(--radius-pill)] border border-[var(--hairline-strong)] bg-[var(--canvas)] text-[var(--ink)] hover:bg-[var(--canvas-soft)] disabled:opacity-30 disabled:pointer-events-none transition-all cursor-pointer"
             aria-label={prevLabel}
             title={prevLabel}
           >
-            <ChevronLeft className="h-3.5 w-3.5" />
+            <ChevronLeft className="h-4 w-4 sm:h-3.5 sm:w-3.5" />
           </button>
           <button
             onClick={() => onNavigate(activeIndex + 1)}
             disabled={activeIndex === totalSections - 1}
-            className="p-1.5 rounded-[var(--radius-pill)] border border-[var(--hairline-strong)] bg-[var(--canvas)] text-[var(--ink)] hover:bg-[var(--canvas-soft)] disabled:opacity-30 disabled:pointer-events-none transition-all cursor-pointer"
+            className="p-2 sm:p-1.5 h-9 w-9 sm:h-auto sm:w-auto flex items-center justify-center rounded-[var(--radius-pill)] border border-[var(--hairline-strong)] bg-[var(--canvas)] text-[var(--ink)] hover:bg-[var(--canvas-soft)] disabled:opacity-30 disabled:pointer-events-none transition-all cursor-pointer"
             aria-label={nextLabel}
             title={nextLabel}
           >
-            <ChevronRight className="h-3.5 w-3.5" />
+            <ChevronRight className="h-4 w-4 sm:h-3.5 sm:w-3.5" />
           </button>
         </div>
 
         {/* Theme Toggle */}
         <button
           onClick={onToggleTheme}
-          className="p-1.5 rounded-[var(--radius-pill)] border border-[var(--hairline-strong)] bg-[var(--canvas)] text-[var(--ink)] hover:bg-[var(--canvas-soft)] transition-all cursor-pointer flex items-center justify-center"
+          className="p-2 sm:p-1.5 h-9 w-9 sm:h-auto sm:w-auto flex items-center justify-center rounded-[var(--radius-pill)] border border-[var(--hairline-strong)] bg-[var(--canvas)] text-[var(--ink)] hover:bg-[var(--canvas-soft)] transition-all cursor-pointer"
           aria-label="Chuyển đổi giao diện"
         >
           {theme === "dark" ? (
-            <Sun className="h-3.5 w-3.5 text-[var(--warning)]" />
+            <Sun className="h-4 w-4 sm:h-3.5 sm:w-3.5 text-[var(--warning)]" />
           ) : (
-            <Moon className="h-3.5 w-3.5 text-[var(--ink)]" />
+            <Moon className="h-4 w-4 sm:h-3.5 sm:w-3.5 text-[var(--ink)]" />
           )}
         </button>
       </div>
